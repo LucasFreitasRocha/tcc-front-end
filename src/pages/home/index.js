@@ -14,7 +14,7 @@ export default function Home() {
       history.push("/login");
     }
     setName('Lucas');
-  }, [jwt])
+  }, [history,jwt])
   return (
     <>
       <h1>hello world {name} !</h1>
