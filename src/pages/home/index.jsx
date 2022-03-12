@@ -27,7 +27,9 @@ export default function Home() {
         },
         (error) => {
           console.log("erro ao carregar o perfil: ", error);
-          alert("Error ao carregar o perfil, tente de novo mais tarde")
+          alert("Error ao carregar o perfil, tente de novo mais tarde");
+          storage.removeItem('jwt');
+          history.push("/login");
         }
 
       );
