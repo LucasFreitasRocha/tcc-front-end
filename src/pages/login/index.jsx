@@ -10,9 +10,10 @@ import api from '../../services/api.js';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassowrd] = useState('');
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   async function onSubmitFomr() {
-    
+    setLoading(true);
     const body = {
       email,
       password
@@ -63,6 +64,7 @@ export default function Login() {
             }
             value={password}
           />
+          { loading ? <div className="">Carregando...</div> : ''}
           <div className='space-around' >
             <Link to={"/register"}> <Button variant="contained" color="primary" >Cadastrar</Button></Link>
             <Button variant="contained" color="primary" onClick={onSubmitFomr} >Login</Button>

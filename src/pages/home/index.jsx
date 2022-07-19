@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 
 import api from '../../services/api.js';
 
+import NavBarTcc from '../../components/NavBarTcc.jsx';
+
 
 export default function Home() {
   const jwt = localStorage.getItem('jwt');
@@ -38,6 +40,7 @@ export default function Home() {
   }, [history, jwt])
   return (
     <>
+      <NavBarTcc />
       <h1>hello world {name} !</h1>
       <h2>Email: {email}</h2>
     </>
