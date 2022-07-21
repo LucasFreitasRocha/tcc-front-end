@@ -13,8 +13,6 @@ export default function Home() {
   const history = useHistory();
 
   useEffect(() => {
-    console.log('iniciando...');
-    console.log(jwt);
     if (!jwt) {
       history.push("/login");
     } else {

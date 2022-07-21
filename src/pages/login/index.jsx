@@ -64,7 +64,7 @@ export default function Login() {
             }
             value={password}
           />
-          { loading ? <div className="">Carregando...</div> : ''}
+          { loading ? <div className="loading">Carregando...</div> : ''}
           <div className='space-around' >
             <Link to={"/register"}> <Button variant="contained" color="primary" >Cadastrar</Button></Link>
             <Button variant="contained" color="primary" onClick={onSubmitFomr} >Login</Button>
