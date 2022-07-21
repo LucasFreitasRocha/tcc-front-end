@@ -1,4 +1,25 @@
 .loading{
   margin: 5px;
   padding: 5px;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.pontos {
+  animation: typing 4s  steps(40)   infinite normal;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to { width: 8px }
+}
+
+label { 
+
+  top: 6px !important;
 }

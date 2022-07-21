@@ -11,7 +11,10 @@ export default function Turma() {
   return (
     <>
       <NavBarTcc />
-      <h1>Turmas</h1>
+      <div className="container">
+        <h1>Turma</h1>
+      </div>
+      
     </>
   );
 }

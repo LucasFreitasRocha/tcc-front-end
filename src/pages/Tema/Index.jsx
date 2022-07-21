@@ -11,7 +11,10 @@ export default function Tema() {
   return (
     <>
       <NavBarTcc />
-      <h1>Tema</h1>
+      <div className="container">
+        <h1>Tema</h1>
+      </div>
+      
     </>
   );
 }

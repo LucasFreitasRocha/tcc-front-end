@@ -11,7 +11,10 @@ export default function Ranking() {
   return (
     <>
       <NavBarTcc />
-      <h1>Ranking</h1>
+      <div className="container">
+        <h1>Ranking</h1>
+      </div>
+      
     </>
   );
 }
