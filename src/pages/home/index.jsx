@@ -39,8 +39,10 @@ export default function Home() {
   return (
     <>
       <NavBarTcc />
+      <div className="container"> 
       <h1>hello world {name} !</h1>
-      <h2>Email: {email}</h2>
+      <h2>Email: {email}</h2> 
+      </div>
     </>
   );
 }

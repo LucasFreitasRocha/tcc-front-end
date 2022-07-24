@@ -1,5 +1,6 @@
-import  React, { useState }  from 'react';
+import  React, { useState , useEffect}  from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import "./index.css";
 
 const pages = [ {id:1 , label: 'turmas'},{id:2 , label: 'temas'} , {id:3 , label: 'ranking'} ];
@@ -7,9 +8,19 @@ const pages = [ {id:1 , label: 'turmas'},{id:2 , label: 'temas'} , {id:3 , label
 
  const NavBarTcc = () => {
   const [activeMenu, setActiveMenu] = useState(false);
+  const jwt = localStorage.getItem('jwt');
+  const history = useHistory();
+  
   const handleActiveMenu = () => { 
     setActiveMenu(!activeMenu)
   }
+
+  useEffect(() => {
+    if (!jwt) {
+      history.push("/login");
+    } 
+
+  },[history,jwt])
   return (
     <header>
       <nav className="nav">

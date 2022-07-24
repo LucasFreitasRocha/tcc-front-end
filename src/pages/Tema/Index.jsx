@@ -1,4 +1,5 @@
 import React from 'react';
+import CustonTable from '../../components/CustonTable.jsx';
 
 
 import NavBarTcc from '../../components/NavBarTcc.jsx';
@@ -12,7 +13,7 @@ export default function Tema() {
     <>
       <NavBarTcc />
       <div className="container">
-        <h1>Tema</h1>
+        <CustonTable/>
       </div>
       
     </>
