@@ -37,7 +37,10 @@
   transition: 0.3s  ease-in-out;
 
 }
-
+.testebox{
+  background-color: !important red;
+  color: red;
+}
 
 
 @media only screen and (max-width: 999px){

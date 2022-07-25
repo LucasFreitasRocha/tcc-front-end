@@ -68,8 +68,8 @@ export default function CustonTable() {
     setPage(0);
   };
   return (
-    <Box sx={{ width: '70%' }}>
-      <Paper sx={{ width: '70%', mb: 2 }}>
+    <Box sx={{ width: '100%',  }}>
+      <Paper sx={{ width: '100%', mb: 2 }}>
       <Toolbar>
         <Typography
           sx={{ flex: '1 1 100%' }}
@@ -83,7 +83,7 @@ export default function CustonTable() {
         <TableContainer>
        
           <Table
-            sx={{ minWidth: 100 }}
+            sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
             size='small'
           >
