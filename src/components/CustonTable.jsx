@@ -10,7 +10,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-
+import {  Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import './index.css';
 
 function createData(name, calories, fat, carbs, protein) {
   return {
@@ -37,7 +39,7 @@ const rows = [
   createData('Nougat', 360),
   createData('Oreo', 437),
 ];
-const headCells = [ 'id', 'tema']
+const headCells = [ 'id', 'tema', 'opções']
 
 
 const variaveisBody = [
@@ -68,8 +70,8 @@ export default function CustonTable() {
     setPage(0);
   };
   return (
-    <Box sx={{ width: '100%',  }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+    <Box className="box-tema">
+      <Paper >
       <Toolbar>
         <Typography
           sx={{ flex: '1 1 100%' }}
@@ -83,7 +85,7 @@ export default function CustonTable() {
         <TableContainer>
        
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{ minWidth: 500 }}
             aria-labelledby="tableTitle"
             size='small'
           >
@@ -93,7 +95,7 @@ export default function CustonTable() {
                 {headCells.map((headCell, index) => (
                   <TableCell
                     key={index}
-                    align='left'
+                    align='center'
                     padding= 'normal' 
                   >
                     {headCell}
@@ -123,7 +125,11 @@ export default function CustonTable() {
                       >
                         {variavelBody.id}
                       </TableCell>
-                      <TableCell align="left"  >{variavelBody.tema}</TableCell>
+                      <TableCell  align='center'  >{variavelBody.tema}</TableCell>
+                      <TableCell  align='center'   > 
+                      <Button variant="contained" color="primary" size="small" id="btn-detalhes-temas"  >Detalhes</Button>
+                      <Button variant="outlined"  color="error" startIcon={<DeleteIcon />} size="small">Delete</Button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}

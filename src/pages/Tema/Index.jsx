@@ -12,7 +12,7 @@ export default function Tema() {
   return (
     <>
       <NavBarTcc />
-      <div className="container">
+      <div className="container center">
         <CustonTable/>
       </div>
       

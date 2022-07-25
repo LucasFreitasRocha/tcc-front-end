@@ -37,15 +37,22 @@
   transition: 0.3s  ease-in-out;
 
 }
-.testebox{
-  background-color: !important red;
-  color: red;
+.box-tema{
+  background-color: #fff;
+  color: black;
+  width: 50%;
 }
 
-
+#btn-detalhes-temas { 
+  margin:  5px;
+}
 @media only screen and (max-width: 999px){
   body {
     overflow-x: hidden;
+  }
+  .box-tema{
+    width: 100%;
+    
   }
   .nav-list {
     position: absolute;
