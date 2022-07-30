@@ -27,7 +27,7 @@ const headCells = ['id', 'tema', 'opções'];
  ] */
 // const largura = window.screen.width;
 
-
+const size = 50;
 
 export default function TableTema() {
   const [page, setPage] = useState(0);
@@ -38,7 +38,7 @@ export default function TableTema() {
   const [auxPage, setAuxPage] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
   useEffect( () => {
-     handleCallapi(0, rowsPerPage);
+     handleCallapi(0, size);
   }, [])
 
   const handleCallapi = async (pageAux, size) => {
@@ -58,29 +58,17 @@ export default function TableTema() {
 
   const handleChangePage = async   (event, newPage) => {
     var auxNPage = newPage + 1;
-    var rangeMinimo = (pageApi === 0) ? (pageApi + 1) : pageApi * rowsPerPage;
-    var rangeMaximo = (pageApi === 0) ? rowsPerPage : rangeMinimo + rowsPerPage;
+    var rangeMinimo = (pageApi === 0) ? (pageApi + 1) : pageApi * size;
+    var rangeMaximo = (pageApi === 0) ? size : rangeMinimo + size;
     var rangeAtual = auxNPage * rowsPerPage;
-
-    console.log("page API: ", pageApi);
-    console.log("aux page: ", auxNPage);
-    console.log("rangeMinimo: ", rangeMinimo);
-    console.log("rangeAtual: ", rangeAtual);
-    console.log("rangeMaximo: ", rangeMaximo);
-
-   
       if (rangeAtual > rangeMaximo) {
-        console.log("aumentar a pagina api");
         setLoading(true);
-        await handleCallapi(pageApi + 1, rowsPerPage);
+        await handleCallapi(pageApi + 1, size);
         await  setPageApi(pageApi + 1);
-      
-       
       }
       if (rangeAtual <= rangeMinimo) {
-        console.log("diminuir  a pagina api");
         setLoading(true);
-        await handleCallapi(pageApi - 1, rowsPerPage);
+        await handleCallapi(pageApi - 1, size);
         await setPageApi(pageApi - 1);   
       }
       if(newPage < page){
@@ -89,23 +77,15 @@ export default function TableTema() {
         await setAuxPage(auxPage + 1);
       }
       setPage(newPage);
-      
-     
-
-      console.log(auxPage)
- 
-
-
-      console.log("----------------------------------------------")
-    
-  }
+}
   
 
   const handleChangeRowsPerPage = async (event) => {
     setLoading(true);
      setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-    handleCallapi(0,event.target.value);
+    
+    handleCallapi(0,((event.target.value > size) ? event.target.value : size));
 
   };
   return (
@@ -179,7 +159,7 @@ export default function TableTema() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[1, 2, 5, 10]}
+          rowsPerPageOptions={[1, 2, 3]}
           component="div"
           count={totalElements}
           rowsPerPage={rowsPerPage}
