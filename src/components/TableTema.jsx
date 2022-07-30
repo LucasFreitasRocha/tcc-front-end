@@ -15,12 +15,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import api from '../services/api.js';
 import './index.css';
 
-const size = 2;
 
 const headCells = ['id', 'tema', 'opções'];
-const largura = window.screen.width;
+/*const temas2  = [
+  {id: 1 , tema : 'tema 1'},
+  {id: 1 , tema : 'tema 2'},
+  {id: 1 , tema : 'tema 3'},
+  {id: 1 , tema : 'tema 4'},
+  {id: 1 , tema : 'tema 5'},
+  {id: 1 , tema : 'tema 6'}
+ ] */
+// const largura = window.screen.width;
 
-var auxTemas = [];
+
 
 export default function TableTema() {
   const [page, setPage] = useState(0);
@@ -28,20 +35,20 @@ export default function TableTema() {
   const [loading, setLoading] = useState(true);
   const [temas, setTemas] = useState([]);
   const [pageApi, setPageApi] = useState(0);
+  const [auxPage, setAuxPage] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
-  useEffect( async () => {
-    await handleCallapi(0);
-
+  useEffect( () => {
+     handleCallapi(0, rowsPerPage);
   }, [])
 
-  const handleCallapi = async (pageAux) => {
-     
-     api.get(`/tema?page=${pageAux}&size=${size}`).then((success) => {
-      auxTemas = success.data.content;
-      setTotalElements(success.data.totalElements);
+  const handleCallapi = async (pageAux, size) => {
+    
+    api.get(`/tema?page=${pageAux}&size=${size}`).then(async (success) => {
       console.log(success)
-      setLoading(false);
-      
+      await setAuxPage(0);
+      await  setTemas(success.data.content);
+      await setTotalElements(success.data.totalElements);
+      await setLoading(false);
      },
      (error) => {
        console.log(error)
@@ -49,10 +56,10 @@ export default function TableTema() {
    );
   }
 
-  const handleChangePage =   (event, newPage) => {
+  const handleChangePage = async   (event, newPage) => {
     var auxNPage = newPage + 1;
-    var rangeMinimo = (pageApi === 0) ? (pageApi + 1) : pageApi * size;
-    var rangeMaximo = (pageApi === 0) ? size : rangeMinimo + size;
+    var rangeMinimo = (pageApi === 0) ? (pageApi + 1) : pageApi * rowsPerPage;
+    var rangeMaximo = (pageApi === 0) ? rowsPerPage : rangeMinimo + rowsPerPage;
     var rangeAtual = auxNPage * rowsPerPage;
 
     console.log("page API: ", pageApi);
@@ -65,20 +72,29 @@ export default function TableTema() {
       if (rangeAtual > rangeMaximo) {
         console.log("aumentar a pagina api");
         setLoading(true);
-         handleCallapi(pageApi + 1);
-        setPageApi(pageApi + 1);
+        await handleCallapi(pageApi + 1, rowsPerPage);
+        await  setPageApi(pageApi + 1);
+      
        
       }
-      if (rangeAtual < rangeMinimo) {
+      if (rangeAtual <= rangeMinimo) {
         console.log("diminuir  a pagina api");
         setLoading(true);
-         handleCallapi(pageApi - 1);
-        setPageApi(pageApi - 1);
-
-        
+        await handleCallapi(pageApi - 1, rowsPerPage);
+        await setPageApi(pageApi - 1);   
       }
-
+      if(newPage < page){
+        await setAuxPage(auxPage - 1);
+      }else {
+        await setAuxPage(auxPage + 1);
+      }
       setPage(newPage);
+      
+     
+
+      console.log(auxPage)
+ 
+
 
       console.log("----------------------------------------------")
     
@@ -86,10 +102,10 @@ export default function TableTema() {
   
 
   const handleChangeRowsPerPage = async (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    console.log("rowsPerPage: ", rowsPerPage);
+    setLoading(true);
+     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-    // handleCallapi(event.target.value);
+    handleCallapi(0,event.target.value);
 
   };
   return (
@@ -131,8 +147,8 @@ export default function TableTema() {
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {auxTemas
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              {temas
+                .slice(auxPage * rowsPerPage, auxPage * rowsPerPage + rowsPerPage)
                 .map((tema, index) => {
 
                   return (
