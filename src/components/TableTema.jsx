@@ -27,9 +27,9 @@ const headCells = ['id', 'tema', 'opções'];
  ] */
 // const largura = window.screen.width;
 
-const size = 50;
+const size = 3;
 
-export default function TableTema() {
+export default function TableTema( {handleOpenNewTransactionModal}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -42,7 +42,6 @@ export default function TableTema() {
   }, [])
 
   const handleCallapi = async (pageAux, size) => {
-    
     api.get(`/tema?page=${pageAux}&size=${size}`).then(async (success) => {
       console.log(success)
       await setAuxPage(0);
@@ -81,12 +80,10 @@ export default function TableTema() {
   
 
   const handleChangeRowsPerPage = async (event) => {
-    setLoading(true);
+    
      setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-    
-    handleCallapi(0,((event.target.value > size) ? event.target.value : size));
-
+    setAuxPage(0);
   };
   return (
     <Box className="box-tema">
@@ -99,9 +96,18 @@ export default function TableTema() {
             variant="h6"
             id="tableTitle"
             component="div"
+           
           >
-            Nutrition
+            Temas
           </Typography>
+          <Button 
+              variant="contained"
+              color="primary"
+              size="small" 
+              onClick={handleOpenNewTransactionModal}
+            >
+              Novo
+            </Button>
         </Toolbar>
         <TableContainer>
 

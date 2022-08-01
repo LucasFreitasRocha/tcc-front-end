@@ -69,10 +69,69 @@ a {
 .column-direction {
   flex-direction: column;
 }
+.react-modal-close{
+  
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  border: 0;
+  background: transparent;
+  transition: filter 0.2s;
+  
+}
+.react-modal-close:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+.react-modal-content { 
+  width: 100%;
+  max-width: 576px;
+  color: black;
+  background-color: #f0f2f5;
+  padding: 3rem;
+  position: relative;
+  border-radius: 0.25rem;
+}
+.react-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+
+input {
+  width: 80%;
+  padding: 0 1.5rem;
+  height: 4rem;
+  border-radius: 0.25rem;
+  background: #e7e9ee;
+  border: 1px solid #d7d7d7;
+  font-size: 1rem;
+  font-weight: 400;
+  
+}
+input::placeholder {
+  color: var(--text-body);
+}
+input + input {
+  margin-top: 1rem;
+}
 @media only screen and (max-width: 750px){
   .card-padrao {
     width: 70%;
     margin-top: 25%;
   }
+}
+
+.campos-de-btns {
+  display: flex;
+  justify-content: space-around;
+  margin: 2%;
 }
