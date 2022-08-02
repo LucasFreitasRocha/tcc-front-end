@@ -27,19 +27,23 @@ const headCells = ['id', 'tema', 'opções'];
  ] */
 // const largura = window.screen.width;
 
-const size = 3;
+const size = 50;
 
-export default function TableTema( {handleOpenNewTransactionModal}) {
+export default function TableTema( {handleOpenTemaModal}) {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(2);
   const [loading, setLoading] = useState(true);
   const [temas, setTemas] = useState([]);
   const [pageApi, setPageApi] = useState(0);
   const [auxPage, setAuxPage] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
   useEffect( () => {
+
      handleCallapi(0, size);
+  
   }, [])
+
+ 
 
   const handleCallapi = async (pageAux, size) => {
     api.get(`/tema?page=${pageAux}&size=${size}`).then(async (success) => {
@@ -60,12 +64,16 @@ export default function TableTema( {handleOpenNewTransactionModal}) {
     var rangeMinimo = (pageApi === 0) ? (pageApi + 1) : pageApi * size;
     var rangeMaximo = (pageApi === 0) ? size : rangeMinimo + size;
     var rangeAtual = auxNPage * rowsPerPage;
+
+    console.log("rangeMinimo: " , rangeMinimo , " rangeAtual: ", rangeAtual, " RangeMaximo: ", rangeMaximo);
       if (rangeAtual > rangeMaximo) {
+        console.log("rangeAtual > rangeMaximo")
         setLoading(true);
         await handleCallapi(pageApi + 1, size);
         await  setPageApi(pageApi + 1);
       }
       if (rangeAtual <= rangeMinimo) {
+        console.log("rangeAtual <= rangeMinimo")
         setLoading(true);
         await handleCallapi(pageApi - 1, size);
         await setPageApi(pageApi - 1);   
@@ -104,7 +112,7 @@ export default function TableTema( {handleOpenNewTransactionModal}) {
               variant="contained"
               color="primary"
               size="small" 
-              onClick={handleOpenNewTransactionModal}
+              onClick={handleOpenTemaModal}
             >
               Novo
             </Button>
@@ -155,7 +163,12 @@ export default function TableTema( {handleOpenNewTransactionModal}) {
                       <TableCell align='center'  >{tema.tema}</TableCell>
                       <TableCell align='center'   >
                         <Button variant="contained" color="primary" size="small" id="btn-detalhes-temas"  >Detalhes</Button>
-                        <Button variant="outlined" color="error" startIcon={<DeleteIcon />} size="small">Delete</Button>
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          startIcon={<DeleteIcon />}
+                          size="small"
+                        >Delete</Button>
                       </TableCell>
                     </TableRow>
                   );
@@ -165,7 +178,7 @@ export default function TableTema( {handleOpenNewTransactionModal}) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[1, 2, 3]}
+          rowsPerPageOptions={[ 2, 5, 10]}
           component="div"
           count={totalElements}
           rowsPerPage={rowsPerPage}

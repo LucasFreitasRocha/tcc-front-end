@@ -4,12 +4,15 @@ import TableTema from '../../components/TableTema.jsx';
 
 import NavBarTcc from '../../components/NavBarTcc.jsx';
 import { ModalTema } from '../../components/ModalTema.jsx';
+import { ModalDelete } from '../../components/ModalDelete.jsx';
 
 
 export default function Tema() {
-  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
+  const [isNewTemaModalOpen, setIsNewTransactionModalOpen] = useState(false);
   
-  function handleOpenNewTransactionModal(){
+
+
+  function handleOpenTemaModal(){
     setIsNewTransactionModalOpen(true);
   }
   function handleCloseNewTransactionModal(){
@@ -20,11 +23,16 @@ export default function Tema() {
     <>
       <NavBarTcc />
       <ModalTema
-        isOpen={isNewTransactionModalOpen}
+        isOpen={isNewTemaModalOpen}
         onRequestClose={handleCloseNewTransactionModal} 
+        
       />
       <div className="container center">
-        <TableTema handleOpenNewTransactionModal={handleOpenNewTransactionModal}/>
+        <TableTema 
+          handleOpenTemaModal={handleOpenTemaModal}
+        
+
+        />
       </div>
       
     </>
