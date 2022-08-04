@@ -18,7 +18,7 @@ export function Delete() {
     const header = {
       headers: {"Authorization" : `Bearer ${jwt}`}
     }
-    api.delete(`/${recurso}/${id}`)
+    api.delete(`/${recurso}/${id}`, header)
     .then((sucess) => {
       alert(`Recurso ${recurso} excluido com sucesso`);
       history.push(`/${recurso}`)

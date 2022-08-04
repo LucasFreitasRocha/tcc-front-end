@@ -18,7 +18,7 @@ export function ModalTema({ isOpen, onRequestClose,  editTema }) {
       const header = {
         headers: {"Authorization" : `Bearer ${jwt}`}
       }
-      api.post('/tema',body,header).then(
+      api.post('/temas',body,header).then(
         (success) => {
           setTema('');
           onRequestClose();
