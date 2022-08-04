@@ -35,6 +35,7 @@ code {
   color: #fff;
   transition: 0.3s;
   text-transform:capitalize;
+  cursor: pointer;
 }
 
 .link:hover {
