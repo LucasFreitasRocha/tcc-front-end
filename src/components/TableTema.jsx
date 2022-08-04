@@ -14,6 +14,7 @@ import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import api from '../services/api.js';
 import './index.css';
+import { Link } from 'react-router-dom';
 
 
 const headCells = ['id', 'tema', 'opções'];
@@ -163,12 +164,14 @@ export default function TableTema( {handleOpenTemaModal}) {
                       <TableCell align='center'  >{tema.tema}</TableCell>
                       <TableCell align='center'   >
                         <Button variant="contained" color="primary" size="small" id="btn-detalhes-temas"  >Detalhes</Button>
+                       <Link to={`/delete/tema/${tema.id}`} >
                         <Button
                           variant="outlined"
                           color="error"
                           startIcon={<DeleteIcon />}
                           size="small"
                         >Delete</Button>
+                        </Link>
                       </TableCell>
                     </TableRow>
                   );

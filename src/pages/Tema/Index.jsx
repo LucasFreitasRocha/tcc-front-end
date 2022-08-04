@@ -4,13 +4,12 @@ import TableTema from '../../components/TableTema.jsx';
 
 import NavBarTcc from '../../components/NavBarTcc.jsx';
 import { ModalTema } from '../../components/ModalTema.jsx';
-import { ModalDelete } from '../../components/ModalDelete.jsx';
 
 
 export default function Tema() {
   const [isNewTemaModalOpen, setIsNewTransactionModalOpen] = useState(false);
   
-
+  
 
   function handleOpenTemaModal(){
     setIsNewTransactionModalOpen(true);

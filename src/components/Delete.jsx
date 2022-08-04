@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-modal";
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import closeImg from "../assets/close.svg";
 import { Button } from '@mui/material';
 import api from '../services/api.js';
+import { useHistory, useParams } from "react-router-dom";
+import NavBarTcc from "./NavBarTcc";
 
-export function ModalDelete({ isOpen, onRequestClose, atualizar,id, recurso}) {
-
+export function Delete() {
+  const { id, recurso } = useParams();
+  const history = useHistory();
+  const handleCancel = () => {
+    history.goBack();
+  }
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      overlayClassName="react-modal-overlay"
-      className="react-modal-content"
-    >
-      <button type="button" className="react-modal-close" onClick={onRequestClose}>
-        <img src={closeImg} alt="Fechar o modal" />
-      </button>
-      <div>
+    <>
+    <NavBarTcc />
+    <div className="container center">
+    <Box className="box-tema">
+      <Paper >
+      <div >
         <div><h2>Tem certeza que quer excluir este recurso "{recurso}"</h2></div>
         <div>
         <Button
@@ -24,17 +27,19 @@ export function ModalDelete({ isOpen, onRequestClose, atualizar,id, recurso}) {
           color="success"
           size="small"
           id="btn-detalhes-temas"
-          onClick={onRequestClose}
+          onClick={handleCancel}
           >Não</Button>
           <Button
           variant="contained"
           color="error"
           size="small"
           id="btn-detalhes-temas"
-          onClick={onRequestClose}
           >Sim</Button>
         </div>
       </div>
-    </Modal>
+      </Paper>
+      </Box>
+      </div>
+      </>
   )
 }

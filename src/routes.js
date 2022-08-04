@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Delete } from './components/Delete';
 
 import Home from './pages/home';
 import Login from './pages/login/index';
@@ -18,6 +19,7 @@ export default function Routes() {
               <Route path="/temas" component={Tema} />
               <Route path="/turmas" component={Turma} />
               <Route path="/ranking" component={Ranking} />
+              <Route path="/delete/:recurso/:id" component={Delete} />
           </Switch>
       </BrowserRouter>
   )
