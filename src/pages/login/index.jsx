@@ -20,6 +20,7 @@ export default function Login() {
     };
     api.post('/auth', body).then(
       (success) => {
+        console.log(success);
         localStorage.setItem('jwt', success.data.token);
         history.push('/');
       },

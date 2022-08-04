@@ -47,7 +47,7 @@ export default function TableTema( {handleOpenTemaModal}) {
  
 
   const handleCallapi = async (pageAux, size) => {
-    api.get(`/tema?page=${pageAux}&size=${size}`).then(async (success) => {
+    api.get(`/temas?page=${pageAux}&size=${size}`).then(async (success) => {
       console.log(success)
       await setAuxPage(0);
       await  setTemas(success.data.content);
@@ -164,7 +164,7 @@ export default function TableTema( {handleOpenTemaModal}) {
                       <TableCell align='center'  >{tema.tema}</TableCell>
                       <TableCell align='center'   >
                         <Button variant="contained" color="primary" size="small" id="btn-detalhes-temas"  >Detalhes</Button>
-                       <Link to={`/delete/tema/${tema.id}`} >
+                       <Link to={`/delete/temas/${tema.id}`} >
                         <Button
                           variant="outlined"
                           color="error"

@@ -16,7 +16,7 @@ export default function Home() {
     if (!jwt) {
       history.push("/login");
     } else {
-      api.get('/user/profile', {
+      api.get('/users/profile', {
         headers: {
           'Authorization': `Bearer ${jwt}`
         }

@@ -10,9 +10,34 @@ import NavBarTcc from "./NavBarTcc";
 export function Delete() {
   const { id, recurso } = useParams();
   const history = useHistory();
+  const jwt = localStorage.getItem('jwt');
   const handleCancel = () => {
     history.goBack();
   }
+  const handleConfirm = () => {
+    const header = {
+      headers: {"Authorization" : `Bearer ${jwt}`}
+    }
+    api.delete(`/${recurso}/${id}`)
+    .then((sucess) => {
+      alert(`Recurso ${recurso} excluido com sucesso`);
+      history.push(`/${recurso}`)
+    }).catch((error) => {
+      if( error.response ){
+          if(error.response.data.status === 403){
+            alert("sessão expirada");
+            localStorage.setItem('jwt', '');
+            history.push("/")
+          }else if(error.response.data.status === 404){
+            alert(`Recurso não existe com esse id: ${id} ` );
+          }else{
+            console.log(error);
+            alert('Ocorreu um erro, tente novamente mais tarde')
+          }    
+      }
+    });
+  }
+  
   return (
     <>
     <NavBarTcc />
@@ -34,6 +59,7 @@ export function Delete() {
           color="error"
           size="small"
           id="btn-detalhes-temas"
+          onClick={handleConfirm}
           >Sim</Button>
         </div>
       </div>
