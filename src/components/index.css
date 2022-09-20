@@ -115,3 +115,15 @@
   align-items: center;
   margin: 2%;
 }
+
+
+.green{
+  background-color: green;
+}
+
+.sub-form-alternativas{
+  border: 1px solid #150606;
+  margin-bottom: 2px;
+  padding: 3px;
+}
+

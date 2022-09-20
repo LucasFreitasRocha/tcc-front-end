@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import NavBarTcc from '../../../components/NavBarTcc.jsx';
+import { useParams } from "react-router-dom";
+import api from '../../../services/api.js';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,52 +15,38 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import api from '../services/api.js';
-import './index.css';
 import { Link } from 'react-router-dom';
 
-
-const headCells = ['codigo', 'tema', 'opções'];
-/*const temas2  = [
-  {id: 1 , tema : 'tema 1'},
-  {id: 1 , tema : 'tema 2'},
-  {id: 1 , tema : 'tema 3'},
-  {id: 1 , tema : 'tema 4'},
-  {id: 1 , tema : 'tema 5'},
-  {id: 1 , tema : 'tema 6'}
- ] */
-// const largura = window.screen.width;
-
+const headCells = ['codigo', 'Enuciado', 'opções'];
 const size = 50;
-
-export default function TableTema( {handleOpenTemaModal}) {
+export default function DetalhesTema() {
+  const { id } = useParams();
+  const [tema, setTema] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(2);
   const [loading, setLoading] = useState(true);
-  const [temas, setTemas] = useState([]);
   const [pageApi, setPageApi] = useState(0);
   const [auxPage, setAuxPage] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
-  useEffect( () => {
+  useEffect(() => {
+    
+    handleCallapi();
 
-     handleCallapi(0, size);
-  
-  }, [])
-
- 
-
-  const handleCallapi = async (pageAux, size) => {
-    api.get(`/temas?page=${pageAux}&size=${size}`).then(async (success) => {
-      console.log(success)
-      await setAuxPage(0);
-      await  setTemas(success.data.content);
-      await setTotalElements(success.data.totalElements);
-      await setLoading(false);
-     },
-     (error) => {
-       console.log(error)
-     }
-   );
+  }, []);
+  const handleCallapi = async () => {
+    api.get(`/temas/${id}`).then(
+      (success) => {
+        console.log(success);
+        setTema(success.data);
+        setTotalElements(success.data.questoes.length);
+        setLoading(false);
+      
+      },
+      (error) => {
+        console.log(error);
+        alert("Ocorreu um erro, tente novamente mais tarde!")
+      }
+    );
   }
 
   const handleChangePage = async   (event, newPage) => {
@@ -95,6 +84,9 @@ export default function TableTema( {handleOpenTemaModal}) {
     setAuxPage(0);
   };
   return (
+    <>
+    <NavBarTcc />
+    <div className="container center">
     <Box className="box-tema">
       <Paper >
       { loading ? <div className="loading">Carregando <p className="pontos">...</p> </div> :
@@ -107,16 +99,18 @@ export default function TableTema( {handleOpenTemaModal}) {
             component="div"
            
           >
-            Temas
+          Detalhes de   {tema.description}
           </Typography>
+          <Link to={`/nova-questao`}>
           <Button 
               variant="contained"
               color="primary"
               size="small" 
-              onClick={handleOpenTemaModal}
-            >
-              Novo
-            </Button>
+          >
+              Nova Questão
+          </Button>
+          </Link>   
+            
         </Toolbar>
         <TableContainer>
 
@@ -142,9 +136,9 @@ export default function TableTema( {handleOpenTemaModal}) {
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {temas
+              {tema.questoes
                 .slice(auxPage * rowsPerPage, auxPage * rowsPerPage + rowsPerPage)
-                .map((tema, index) => {
+                .map((questao, index) => {
 
                   return (
                     <TableRow
@@ -155,18 +149,17 @@ export default function TableTema( {handleOpenTemaModal}) {
 
                       <TableCell
                         component="th"
-
                         scope="row"
                         padding='normal'
                       >
-                        {tema.codigo}
+                        {questao.codigo}
                       </TableCell>
-                      <TableCell align='center'  >{tema.tema}</TableCell>
+                      <TableCell align='center'  >{questao.enuciado}</TableCell>
                       <TableCell align='center'   >
-                        <Link to={`/temas/${tema.id}`}>
+                        <Link to={`/temas/${questao.id}`}>
                           <Button variant="contained" color="primary" size="small" id="btn-detalhes-temas"  >Detalhes</Button>
                         </Link>
-                       <Link to={`/delete/temas/${tema.id}`} >
+                       <Link to={`/delete/questoes/${tema.id}`} >
                         <Button
                           variant="outlined"
                           color="error"
@@ -178,7 +171,6 @@ export default function TableTema( {handleOpenTemaModal}) {
                     </TableRow>
                   );
                 })}
-
             </TableBody>
           </Table>
         </TableContainer>
@@ -195,5 +187,8 @@ export default function TableTema( {handleOpenTemaModal}) {
         }
       </Paper>
     </Box>
+    </div>
+    </>
   );
-}
+
+} 
