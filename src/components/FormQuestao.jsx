@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import CheckIcon from '@mui/icons-material/Check';
 import ToggleButton from '@mui/material/ToggleButton';
+import Checkbox from '@mui/material/Checkbox';
 
 
 
@@ -41,10 +42,15 @@ export default function FormQuestao({ editQuestao }) {
     setAlternativas([...alternativas]);
 
   }
-  const handleChangeVerdadeiraAlternativa = async (verdadeira, index) => {
-    alternativas[index].certo = verdadeira;
-    await setAlternativas([...alternativas]);
-  
+  const handleCheckBox = (index) => {
+    alternativas.forEach((alternativa, index2)=> {
+      if(index2 != index){
+        alternativa.certo = false;
+      }else{
+        alternativa.certo = !alternativa.certo;
+      }
+    })
+    setAlternativas([...alternativas])
   }
   const handleAddAlternativa = () => {
     setAlternativas([...alternativas, { alternativa: '', certo: false }])
@@ -57,7 +63,7 @@ export default function FormQuestao({ editQuestao }) {
   const handleRemoveAlternativa = (position) => {
 
     console.log("handleRemoveAlternativa")
-    setAlternativas([...alternativas.filter(( alternativa ,index)  => index !== position)]);
+    setAlternativas([...alternativas.filter((alternativa, index) => index !== position)]);
   }
 
   return (
@@ -111,17 +117,13 @@ export default function FormQuestao({ editQuestao }) {
                   <div className="campos-de-btns">
                     <div >
                       <div> resposta Certa? </div>
-                      <ToggleButton
-                        value="check"
-                        color="success"
-                        selected={alternativa.certo}
+                      <Checkbox
+                        checked={alternativa.certo}
                         onChange={(event) => {
-                          handleChangeVerdadeiraAlternativa(!event.target.value, index)
-                        }
-                        }
-                      >
-                        <CheckIcon />
-                      </ToggleButton>
+                         handleCheckBox(index)
+                        }}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                      />
                     </div>
                     <div className="campos-de-btns" >
                       <Button
@@ -129,7 +131,7 @@ export default function FormQuestao({ editQuestao }) {
                         color="error"
                         size="small"
                         id="removerAlternativa"
-                        onClick={(event) => {setAlternativas([...alternativas.filter(( alternativa ,index2)  => index2 !== index)]);}}
+                        onClick={(event) => { setAlternativas([...alternativas.filter((alternativa, index2) => index2 !== index)]); }}
                       >Remover Alternativa</Button>
                     </div>
                   </div>
