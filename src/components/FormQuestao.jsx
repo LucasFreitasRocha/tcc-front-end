@@ -5,12 +5,10 @@ import Paper from '@mui/material/Paper';
 import api from '../services/api.js';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import CheckIcon from '@mui/icons-material/Check';
-import ToggleButton from '@mui/material/ToggleButton';
 import Checkbox from '@mui/material/Checkbox';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -18,9 +16,11 @@ import Checkbox from '@mui/material/Checkbox';
 
 export default function FormQuestao({ editQuestao }) {
   const [enuciado, setEnuciado] = useState('');
+  const [codigo, setCodigo] = useState('');
   const [temas, setTemas] = useState([]);
   const [alternativas, setAlternativas] = useState([]);
   const [selectedTemas, setSelectedTemas] = useState(1);
+  const history = useHistory();
   useEffect(() => {
     handleCallapi();
 
@@ -42,6 +42,12 @@ export default function FormQuestao({ editQuestao }) {
     setAlternativas([...alternativas]);
 
   }
+  const handleChangeCodigolternativa = (codigo, index) => {
+
+    alternativas[index].codigo = codigo;
+    setAlternativas([...alternativas]);
+
+  }
   const handleCheckBox = (index) => {
     alternativas.forEach((alternativa, index2)=> {
       if(index2 != index){
@@ -53,18 +59,37 @@ export default function FormQuestao({ editQuestao }) {
     setAlternativas([...alternativas])
   }
   const handleAddAlternativa = () => {
-    setAlternativas([...alternativas, { alternativa: '', certo: false }])
+    setAlternativas([...alternativas, { alternativa: '', codigo: '',  certo: false }])
   }
   const handleCreateNewQuestao = (event) => {
-    console.log(alternativas)
+    const questao = {
+      alternativas: alternativas ,
+      codigo: codigo,
+      enuciado: enuciado,
+      temaId: selectedTemas
+    }
+    api.post('/questoes',questao ).then(
+      (success) => {
+        setEnuciado('');
+        setCodigo('');
+        setAlternativas([]);
+        history.push('/');
+
+      }
+    ).catch((error) => {
+      if( error.response ){
+          if(error.response.data.status === 403){
+            alert("sessão expirada");
+            localStorage.setItem('jwt', '');
+          } 
+          console.log(error.response);
+      }
+    });
+    
   }
 
 
-  const handleRemoveAlternativa = (position) => {
 
-    console.log("handleRemoveAlternativa")
-    setAlternativas([...alternativas.filter((alternativa, index) => index !== position)]);
-  }
 
   return (
     <Box className="box-tema">
@@ -78,6 +103,13 @@ export default function FormQuestao({ editQuestao }) {
               placeholder="Enuciado"
               value={enuciado}
               onChange={(event) => setEnuciado(event.target.value)}
+            />
+          </div>
+          <div className="titulo">
+            <input
+              placeholder="Codigo"
+              value={codigo}
+              onChange={(event) => setCodigo(event.target.value)}
             />
           </div>
           <FormControl className="select-form-control">
@@ -113,6 +145,11 @@ export default function FormQuestao({ editQuestao }) {
                     placeholder="Enuciado Da alternativa"
                     value={alternativa.alternativa}
                     onChange={(event) => handleChangeEnuciadoAlternativa(event.target.value, index)}
+                  />
+                  <input
+                    placeholder="codigo Da alternativa"
+                    value={alternativa.codigo}
+                    onChange={(event) => handleChangeCodigolternativa(event.target.value, index)}
                   />
                   <div className="campos-de-btns">
                     <div >

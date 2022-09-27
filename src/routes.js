@@ -10,6 +10,7 @@ import Tema from './pages/Tema/Index';
 import DetalhesTema from './pages/Tema/detalhesTemas/Index';
 import Turma from './pages/Turma/Index';
 import NovaQuestao from './pages/questao/nova/index';
+import Questao from './pages/questao';
 
 export default function Routes() {
   return (
@@ -23,6 +24,7 @@ export default function Routes() {
               <Route path="/turmas" component={Turma} />
               <Route path="/ranking" component={Ranking} />
               <Route path="/nova-questao" component={NovaQuestao}/>
+              <Route path="/questoes" component={Questao}/>
               <Route path="/delete/:recurso/:id" component={Delete} />
           </Switch>
       </BrowserRouter>

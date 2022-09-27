@@ -150,7 +150,7 @@ export default function TableTema( {handleOpenTemaModal}) {
                     <TableRow
                       hover
                       tabIndex={-1}
-                      key={index}
+                      key={tema.codigo}
                     >
 
                       <TableCell

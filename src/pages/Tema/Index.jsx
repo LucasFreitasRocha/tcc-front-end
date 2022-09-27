@@ -29,8 +29,6 @@ export default function Tema() {
       <div className="container center">
         <TableTema 
           handleOpenTemaModal={handleOpenTemaModal}
-        
-
         />
       </div>
       

@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import "./index.css";
 
-const pages = [{ id: 1, label: 'turmas' }, { id: 2, label: 'temas' }, { id: 3, label: 'ranking' }, { id: 4, label: 'Logoff' }];
+const pages = [
+  { id: 'page1', label: 'turmas' },
+ { id: 'page2', label: 'temas' },
+ { id: 'page3', label: 'Questoes' },
+  { id: 'page4', label: 'ranking' }, 
+  { id: 'page5', label: 'Logoff' }];
 
 
 const NavBarTcc = () => {
