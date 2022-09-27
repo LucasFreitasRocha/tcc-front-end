@@ -10,12 +10,12 @@ export default function Questao() {
   const [questoes, setQuestoes] = useState([])
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(2);
+  const [auxPage, setAuxPage] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
 
   const handleChangePage = async   (event, newPage) => {
-    setPage(newPage);
     setLoading(true);
-    handleCallapi();
+    handleCallapi(newPage,rowsPerPage);
   }
   
 
@@ -23,20 +23,22 @@ export default function Questao() {
     setLoading(true);
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-    handleCallapi(parseInt(event.target.value, 10));
+    handleCallapi(0, parseInt(event.target.value, 10));
   };
   useEffect(() => {
     
-    handleCallapi(rowsPerPage);
+    handleCallapi(page,rowsPerPage);
 
   }, []);
-  const handleCallapi = async (perPage) => {
-    api.get(`/questoes?page=${page}&size=${perPage}`).then(async (success) => {
+  const handleCallapi = async (newPage,perPage) => {
+    api.get(`/questoes?page=${newPage}&size=${perPage}`).then(async (success) => {
       console.log(success)
-      await setPage(0);
-      await  setQuestoes(success.data.content);
-      await setLoading(false);
+      setPage(newPage);
+      setAuxPage(0);
+      await setQuestoes(success.data.content);
       await setTotalElements(success.data.totalElements);
+      await setLoading(false);
+      
      },
      (error) => {
        console.log(error)
@@ -53,6 +55,7 @@ export default function Questao() {
       title="Questões"
       questoes={questoes} 
       page ={page}
+      auxPage={auxPage}
       totalElements = {totalElements}
       rowsPerPage = {rowsPerPage}
       handleChangePage={handleChangePage}

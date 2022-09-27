@@ -19,6 +19,7 @@ export default function TableQuestao(
   {title,
   questoes,
   page,
+  auxPage,
   totalElements,
   rowsPerPage,
   handleChangePage,
@@ -76,7 +77,7 @@ export default function TableQuestao(
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
               {questoes
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .slice(auxPage * rowsPerPage, auxPage * rowsPerPage + rowsPerPage)
                 .map((questao, index) => {
 
                   return (

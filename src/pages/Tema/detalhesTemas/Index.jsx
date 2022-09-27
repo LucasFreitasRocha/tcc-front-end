@@ -57,6 +57,7 @@ export default function DetalhesTema() {
       title={tema.description}
       questoes={tema.questoes} 
       page ={page}
+      auxPage = {page}
       rowsPerPage = {rowsPerPage}
       totalElements = {totalElements}
       handleChangePage={handleChangePage}
