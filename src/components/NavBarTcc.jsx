@@ -33,7 +33,7 @@ const NavBarTcc = () => {
   return (
     <header>
       <nav className="nav">
-        <Link to={"/"} className="logo link">TCC</Link>
+        <Link to={"/"} className="logo link">Noob Security</Link>
         <div className={activeMenu ? 'mobile-menu active' : 'mobile-menu'} onClick={handleActiveMenu}>
           <div className="line1"></div>
           <div className="line2"></div>

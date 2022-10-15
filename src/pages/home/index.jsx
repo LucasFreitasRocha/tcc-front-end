@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 
 import api from '../../services/api.js';
 
@@ -39,9 +41,15 @@ export default function Home() {
   return (
     <>
       <NavBarTcc />
-      <div className="container"> 
-      <h1>hello world {name} !</h1>
-      <h2>Email: {email}</h2> 
+      <div className="container center">
+      <Box className="box-tema">
+        <Paper  >
+          <h1>Bem vindo ao front-end do nosso tcc</h1>
+          <p>
+          Agradecemos por querer colaborar em nosso projeto, <Link to="/matricular"> clique aqui </Link>para se cadastrar em uma turma. 
+          </p>
+        </Paper> 
+      </Box>
       </div>
     </>
   );

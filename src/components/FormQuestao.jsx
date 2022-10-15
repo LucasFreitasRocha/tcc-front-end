@@ -134,7 +134,7 @@ export default function FormQuestao({ editQuestao }) {
           <div>
             <h2>A Questão deve ter pelo menos 2 alternativas</h2>
             <Button variant="contained" color="success" size="small" id="btn-detalhes-temas"
-              onClick={handleAddAlternativa}  >Adicionar Questão</Button>
+              onClick={handleAddAlternativa}  >Adicionar Alternativa</Button>
           </div>
 
           {
