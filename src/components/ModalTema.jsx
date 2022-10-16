@@ -5,20 +5,22 @@ import { Button } from '@mui/material';
 import api from '../services/api.js';
 import { useHistory } from 'react-router-dom';
 
-export function ModalTema({ isOpen, onRequestClose,  editTema }) {
+export function ModalTema({ isOpen, onRequestClose, editTema }) {
   const [tema, setTema] = useState('');
+  const [codigo, setCodigo] = useState('');
   const jwt = localStorage.getItem('jwt');
   const history = useHistory();
   const handleCreateNewTema = (event) => {
 
-    if(tema.trim() !== ''){
+    if (tema.trim() !== '') {
       const body = {
-        descricao : tema
+        codigo: codigo,
+        descricao: tema
       }
       const header = {
-        headers: {"Authorization" : `Bearer ${jwt}`}
+        headers: { "Authorization": `Bearer ${jwt}` }
       }
-      api.post('/temas',body,header).then(
+      api.post('/temas', body, header).then(
         (success) => {
           setTema('');
           onRequestClose();
@@ -26,21 +28,21 @@ export function ModalTema({ isOpen, onRequestClose,  editTema }) {
 
         }
       ).catch((error) => {
-        if( error.response ){
-            if(error.response.data.status === 403){
-              alert("sessão expirada");
-              localStorage.setItem('jwt', '');
-              onRequestClose() 
-            } 
+        if (error.response) {
+          if (error.response.data.status === 403) {
+            alert("sessão expirada");
+            localStorage.setItem('jwt', '');
+            onRequestClose()
+          }
         }
       });
-    }else{
+    } else {
       alert("escrever algo!");
     }
-    
-  
+
+
   }
-  const handlehaveEditTema = () =>{
+  const handlehaveEditTema = () => {
     setTema(editTema.tema);
   }
   useEffect(() => {
@@ -58,28 +60,35 @@ export function ModalTema({ isOpen, onRequestClose,  editTema }) {
       <button type="button" className="react-modal-close" onClick={onRequestClose}>
         <img src={closeImg} alt="Fechar o modal" />
       </button>
-      <form  onSubmit={handleCreateNewTema}>
+      <form onSubmit={handleCreateNewTema}>
         <div className="titulo">
           {(editTema) ? <h2 >Editar Tema</h2> : <h2 >Cadastrar Tema</h2>}
         </div>
-        <div className="titulo">
-          <input
-            placeholder="Tema"
-            value={tema.tema}
-            onChange={(event) => setTema(event.target.value)}
-          />
+        <div className="titulo ">
+          <div>
+            <input
+              placeholder="Tema"
+              value={tema}
+              onChange={(event) => setTema(event.target.value)}
+            />
+            <input
+              placeholder="Codigo"
+              value={codigo}
+              onChange={(event) => setCodigo(event.target.value)}
+            />
+          </div>
         </div>
         <div className="campos-de-btns" >
           <Button
-          variant="contained"
-          color="error"
-          size="small"
-          id="btn-detalhes-temas"
-          onClick={onRequestClose}
+            variant="contained"
+            color="error"
+            size="small"
+            id="btn-detalhes-temas"
+            onClick={onRequestClose}
           >Cancelar</Button>
           {(editTema) ?
             <Button variant="contained" color="primary" size="small" id="btn-detalhes-temas"  >Atualizar</Button> :
-            <Button variant="contained" color="primary" size="small" id="btn-detalhes-temas"  onClick={handleCreateNewTema}>Cadastrar</Button>}
+            <Button variant="contained" color="primary" size="small" id="btn-detalhes-temas" onClick={handleCreateNewTema}>Cadastrar</Button>}
         </div>
       </form>
 
