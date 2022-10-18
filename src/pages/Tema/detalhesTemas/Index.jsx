@@ -14,6 +14,7 @@ export default function DetalhesTema() {
   const [totalElements, setTotalElements] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(2);
+  const jwt = localStorage.getItem('jwt');
 
   const handleChangePage = async   (event, newPage) => {
     setPage(newPage);
@@ -32,7 +33,10 @@ export default function DetalhesTema() {
 
   }, []);
   const handleCallapi = async () => {
-    api.get(`/temas/${id}`).then(
+    const header = {
+      headers: {"Authorization" : `Bearer ${jwt}`}
+    }
+    api.get(`/temas/${id}`, header ).then(
       (success) => {
         console.log(success);
         setTema(success.data);

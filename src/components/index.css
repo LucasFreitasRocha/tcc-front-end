@@ -116,6 +116,9 @@
   margin: 2%;
 }
 
+#btn-matricular{
+  margin-right: 28px;
+}
 
 .green{
   background-color: green;
@@ -127,3 +130,9 @@
   padding: 3px;
 }
 
+@media only screen and (max-width: 750px){
+  #btn-matricular{
+    margin-right: 45px;
+  }
+  
+}

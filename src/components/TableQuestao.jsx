@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 
 const headCells = ['codigo', 'Enuciado', 'opções'];
+const size = 50;
 export default function TableQuestao(
   {title,
   questoes,
