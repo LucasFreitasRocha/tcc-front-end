@@ -27,7 +27,11 @@ export default function Matricular() {
           }else if(error.response.data.status === 404){
             console.log(error)
             alert(`Turma não encontrada` );
-          }else{
+          }else if(error.response.data.status === 400){
+            console.log(error)
+            alert(error.response.data.message );
+          }
+          else{
             console.log(error);
             alert('Ocorreu um erro, tente novamente mais tarde')
           }    
