@@ -8,14 +8,14 @@ import './login.css';
 import api from '../../services/api.js';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassowrd] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   async function onSubmitFomr() {
     setLoading(true);
     const body = {
-      email,
+      userName,
       password
     };
     api.post('/auth', body).then(
@@ -25,12 +25,12 @@ export default function Login() {
         history.push('/');
       },
       (error) => {
-        console.log("error: " , error);
+        console.log("error: ", error);
         alert("Login ou senha incorreto!");
       }
     )
-    
-    
+
+
   }
   return (
     <div className="bg-black center" >
@@ -38,18 +38,20 @@ export default function Login() {
         <div className='Form'>
           <h1>Login</h1>
           <TextField
-            id="email"
-            label="Email"
+            id="userName"
+            label="userName (maximo 15)"
             variant="outlined"
             margin="normal"
             fullWidth
-            type="email"
+            type="string"
             onChange={
               (e) => {
-                setEmail(e.target.value);
+                if (e.target.value.length <= 15) {
+                  setUserName(e.target.value);
+                }
               }
             }
-            value={email}
+            value={userName}
           />
           <TextField
             id="password"
@@ -60,12 +62,14 @@ export default function Login() {
             type="password"
             onChange={
               (e) => {
-                setPassowrd(e.target.value);
+                if (e.target.value.length <= 15) {
+                  setPassowrd(e.target.value);
+                }
               }
             }
             value={password}
           />
-          { loading ? <div className="loading">Carregando <p className="pontos">...</p> </div> : '' }
+          {loading ? <div className="loading">Carregando <p className="pontos">...</p> </div> : ''}
           <div className='space-around' >
             <Link to={"/register"}> <Button variant="contained" color="primary" >Cadastrar</Button></Link>
             <Button variant="contained" color="primary" onClick={onSubmitFomr} >Login</Button>

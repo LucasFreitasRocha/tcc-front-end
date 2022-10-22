@@ -12,6 +12,7 @@ import Turma from './pages/Turma/Index';
 import NovaQuestao from './pages/questao/nova/index';
 import Questao from './pages/questao';
 import Matricular from './pages/Turma/Matricular/Index';
+import NovaTurma from './pages/Turma/NovaTurma/Index';
 
 export default function Routes() {
   return (
@@ -27,6 +28,7 @@ export default function Routes() {
               <Route path="/nova-questao" component={NovaQuestao}/>
               <Route path="/matricular" component={Matricular}/>
               <Route path="/questoes" component={Questao}/>
+              <Route path="/nova-turma" component={NovaTurma}/>
               <Route path="/delete/:recurso/:id" component={Delete} />
           </Switch>
       </BrowserRouter>

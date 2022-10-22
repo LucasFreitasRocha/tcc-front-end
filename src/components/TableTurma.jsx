@@ -122,7 +122,7 @@ export default function TableTurma() {
                 >
                   Turmas
                 </Typography>
-                <Link to={`/nova-questao`}>
+                <Link to={`/nova-turma`}>
                   <Button
                     variant="contained"
                     color="primary"

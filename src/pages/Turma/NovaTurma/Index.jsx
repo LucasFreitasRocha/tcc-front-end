@@ -1,15 +1,14 @@
 import React from 'react';
-import FormQuestao from '../../../components/FormQuestao';
+import FormTurma from '../../../components/FormTurma';
 import NavBarTcc from '../../../components/NavBarTcc';
-export default function NovaQuestao( ) {
+export default function NovaTurma( ) {
  
   return(
     <>
       <NavBarTcc />
-      
       <div className="container center">
+        <FormTurma/>
       
-      <FormQuestao  />
       </div>
 
     </>

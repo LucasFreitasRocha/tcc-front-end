@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '@mui/material';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import api from '../services/api.js';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
+import 
+{ 
+  Button,
+  Box,
+  Paper,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Checkbox
+} from '@mui/material';
+
 import { useHistory } from 'react-router-dom';
+import api from '../services/api.js';
 
 
 

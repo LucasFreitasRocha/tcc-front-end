@@ -9,6 +9,7 @@ export default function Register() {
   
   const [name, setName] = useState(''); 
   const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
   async function onSubmitFomr() {
@@ -16,9 +17,10 @@ export default function Register() {
     const body = {
       name,
       email,
-      password
+      password,
+      userName
     };
-      api.post("/user", body).then(
+      api.post("/users", body).then(
         (succes) => {
           console.log("sucess");
           localStorage.setItem('jwt', succes.data.token);
@@ -41,13 +43,30 @@ export default function Register() {
             variant="outlined"
             margin="normal"
             fullWidth
-            type="name"
+            type="input"
             onChange={
               (e) => {
                 setName(e.target.value);
               }
             }
             value={name}
+          />
+          <TextField
+            id="userName"
+            label="userName (maximo 15)"
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            type="string"
+            maxlength="2"
+            onChange={
+              (e) => {
+                if(e.target.value.length <=15){
+                  setUserName(e.target.value);
+                }
+              }
+            }
+            value={userName}
           />
           <TextField
             id="email"
@@ -65,14 +84,16 @@ export default function Register() {
           />
           <TextField
             id="password"
-            label="Senha"
+            label="Senha (maximo 15)"
             variant="outlined"
             margin="normal"
             fullWidth
             type="password"
             onChange={
               (e) => {
+                if(e.target.value.length <=15){
                 setPassword(e.target.value);
+                }
               }
             }
             value={password}
