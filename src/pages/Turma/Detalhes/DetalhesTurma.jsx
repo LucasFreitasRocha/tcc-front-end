@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-
+import NavBarTcc from '../../../components/NavBarTcc.jsx';
+import { useParams } from "react-router-dom";
+import api from '../../../services/api.js';
 import {
   Button,
   Table,
@@ -16,41 +18,58 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
-import api from '../services/api.js';
 
-const headCells = ['codigo', 'name', 'professor', 'opções'];
+const headCells = ['id', 'name', 'Ranking', 'opções'];
 const size = 50;
-export default function TableTurma() {
-  const [turmas, setTurmas] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(2);
+export default function DetalhesTurma() {
+  const { id } = useParams();
+  const jwt = localStorage.getItem('jwt');
   const [loading, setLoading] = useState(true);
-
+  const [turma, setTurma] = useState({})
+  const [page, setPage] = useState(0);
   const [pageApi, setPageApi] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(2);
   const [auxPage, setAuxPage] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
+  const [usuarioTurmas, setUsuarioTurmas] = useState([]);
+  const header = {
+    headers: {"Authorization" : `Bearer ${jwt}`}
+  }
   useEffect(() => {
+    
+    handleCallapi();
 
-    handleCallapi(0, size);
+  }, []);
 
-  }, [])
-
-
-
-  const handleCallapi = async (pageAux, size) => {
-    api.get(`/turmas?page=${pageAux}&size=${size}`).then(async (success) => {
-      console.log(success)
-      await setAuxPage(0);
-      await setTurmas(success.data.content);
-      await setTotalElements(success.data.totalElements);
-      await setLoading(false);
+  const handleRanking = () => {
+    api.post(`/turmas/calcularRanking/${id}`, {}, header).then( async (success) => {
+     alert("Ranking Calculado com sucesso")
+     handleCallapi();
     },
+    (error) => {
+      console.log(error);
+      alert("Ocorreu um erro, tente novamente mais tarde!")
+    }
+  );
+  }
+  const handleCallapi = async () => {
+   
+    api.get(`/turmas/${id}`, header ).then( async (success) => {
+        var total = success.data.UsuariosTurma.length;
+        console.log(success)
+        await setTurma(success.data);
+        await setTotalElements(total);
+        await setUsuarioTurmas(success.data.UsuariosTurma);
+        setLoading(false);
+      },
       (error) => {
-        console.log(error)
+        console.log(error);
+        alert("Ocorreu um erro, tente novamente mais tarde!")
       }
     );
-  }
 
+    
+  }
   const handleChangePage = async (event, newPage) => {
     var auxNPage = newPage + 1;
     var rangeMinimo = (pageApi === 0) ? (pageApi + 1) : pageApi * size;
@@ -85,33 +104,16 @@ export default function TableTurma() {
     setPage(0);
     setAuxPage(0);
   };
+
   return (
     <>
-      <Box className="box-tema">
+    <NavBarTcc />
+    <div className="container center">
+    <Box className="box-tema">
         <Paper >
           {loading ? <div className="loading">Carregando <p className="pontos">...</p> </div> :
             <>
-              <Toolbar>
-                <Typography
-                  sx={{ flex: '1 1 100%' }}
-                  variant="h6"
-                  id="tableTitle1"
-                  component="div"
-
-                >
-                  Matricule-se em uma turma
-                </Typography>
-                <Link to={`/matricular`}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    id="btn-matricular"
-                  >
-                    Matricular
-                  </Button>
-                </Link>
-              </Toolbar>
+              
               <Toolbar>
                 <Typography
                   sx={{ flex: '1 1 100%' }}
@@ -120,17 +122,16 @@ export default function TableTurma() {
                   component="div"
 
                 >
-                  Turmas
+                  Alunos
                 </Typography>
-                <Link to={`/nova-turma`}>
                   <Button
                     variant="contained"
                     color="primary"
                     size="small"
+                    onClick ={handleRanking}
                   >
-                    Nova Turma
+                    Calcular Ranking
                   </Button>
-                </Link>
               </Toolbar>
 
               <TableContainer>
@@ -157,7 +158,7 @@ export default function TableTurma() {
                   <TableBody>
                     {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                    {turmas
+                    {usuarioTurmas
                       .slice(auxPage * rowsPerPage, auxPage * rowsPerPage + rowsPerPage)
                       .map((turma, index) => {
 
@@ -165,7 +166,7 @@ export default function TableTurma() {
                           <TableRow
                             hover
                             tabIndex={-1}
-                            key={turma.codigo}
+                            key={turma.id}
                           >
 
                             <TableCell
@@ -173,10 +174,10 @@ export default function TableTurma() {
                               scope="row"
                               padding='normal'
                             >
-                              {turma.codigo}
+                              {turma.id}
                             </TableCell>
-                            <TableCell align='center'  >{turma.name}</TableCell>
                             <TableCell align='center'  >{turma.user.nome}</TableCell>
+                            <TableCell align='center'  >{turma.ranking}</TableCell>
                             <TableCell align='center'   >
                               <Link to={`/turmas/${turma.id}`}>
                                 <Button variant="contained" color="primary" size="small" id="btn-detalhes-temas"  >Detalhes</Button>
@@ -209,6 +210,7 @@ export default function TableTurma() {
           }
         </Paper>
       </Box>
+    </div>
     </>
   );
 }

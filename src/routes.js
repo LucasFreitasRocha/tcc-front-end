@@ -13,6 +13,7 @@ import NovaQuestao from './pages/questao/nova/index';
 import Questao from './pages/questao';
 import Matricular from './pages/Turma/Matricular/Index';
 import NovaTurma from './pages/Turma/NovaTurma/Index';
+import DetalhesTurma from './pages/Turma/Detalhes/DetalhesTurma';
 
 export default function Routes() {
   return (
@@ -23,6 +24,7 @@ export default function Routes() {
               <Route path="/login" component={Login} />
               <Route path="/temas/:id" component={DetalhesTema} />
               <Route path="/temas" component={Tema} />
+              <Route path="/turmas/:id" component={DetalhesTurma} />
               <Route path="/turmas" component={Turma} />
               <Route path="/ranking" component={Ranking} />
               <Route path="/nova-questao" component={NovaQuestao}/>
